@@ -1,0 +1,185 @@
+.hero-bg picture {
+  display: block;
+  height: 100%;
+}
+
+.mobile-hero-truck,
+.hero-benefit-short {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  .hero-track {
+    height: auto;
+    min-height: 0;
+    max-height: none;
+  }
+
+  .hero {
+    --hero-gutter: clamp(15px, 5vw, 32px);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(20px, 6vw, 32px);
+    height: auto;
+    min-height: min(690px, calc(100svh - 115px));
+    padding: clamp(34px, 10vw, 52px) var(--hero-gutter) clamp(22px, 6vw, 32px);
+  }
+
+  .hero-bg {
+    background: #171b21;
+  }
+
+  .hero-bg img {
+    object-position: center;
+    transform: none;
+    will-change: auto;
+  }
+
+  .hero-bg::after {
+    background: linear-gradient(#11161c73, transparent 67%, #11161c59);
+  }
+
+  .hero-top {
+    padding: 0;
+  }
+
+  .hero-eta {
+    margin-top: 24px;
+  }
+
+  .hero-actions {
+    row-gap: 12px;
+    margin-top: clamp(28px, 8vw, 40px);
+  }
+
+  .hero-callback-note br {
+    display: none;
+  }
+
+  .mobile-hero-truck {
+    --truck-art: url("assets/mobile-hero-truck.webp");
+    --truck-entrance: 1.65s cubic-bezier(.25, .55, .36, 1) 2.5s both;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    flex: 1 0 auto;
+    align-items: end;
+    margin-inline: calc(-1 * var(--hero-gutter));
+    padding-block: 4px 7px;
+    overflow: clip;
+  }
+
+  .mobile-hero-rig {
+    position: relative;
+    width: 135%;
+    aspect-ratio: 1440 / 533;
+    background: var(--truck-art) center / 100% 100% no-repeat;
+    filter: drop-shadow(0 5px 5px #0a0d1290);
+    animation: mobile-truck-drive var(--truck-entrance);
+  }
+
+  /* Sample each wheel from the same image so it lines up at rest. */
+  .mobile-hero-wheel {
+    position: absolute;
+    left: var(--wheel-x);
+    top: var(--wheel-y);
+    width: 9.505%;
+    aspect-ratio: 1;
+    translate: -50% -50%;
+    border-radius: 50%;
+    background-image: var(--truck-art);
+    background-repeat: no-repeat;
+    background-size: 1052.041% 389.286%;
+    background-position: var(--wheel-crop-position);
+    mask-image: radial-gradient(closest-side, #000 94%, transparent);
+    animation: mobile-wheel-roll var(--truck-entrance);
+  }
+
+  .mobile-hero-wheel--front {
+    --wheel-x: 18.477%;
+    --wheel-y: 86.632%;
+    --wheel-crop-position: 15.166% 99.295%;
+  }
+
+  .mobile-hero-wheel--rear {
+    --wheel-x: 53.395%;
+    --wheel-y: 85.976%;
+    --wheel-crop-position: 53.751% 98.413%;
+  }
+
+  .hero-bottom {
+    position: relative;
+    inset: auto;
+    padding: 12px 10px;
+  }
+
+  .hero-benefits {
+    display: grid;
+  }
+
+  .hero-benefits li,
+  .hero-benefits li:first-child {
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 7px;
+    min-height: 0;
+    padding: 2px 4px 4px;
+    text-align: center;
+    font-size: clamp(13px, 3.6vw, 17px);
+    font-weight: 700;
+    letter-spacing: -.02em;
+  }
+
+  .hero-benefits li + li {
+    border-inline-start: 1px solid #2023261a;
+  }
+
+  .hero-benefits h2 {
+    min-height: 2.3em;
+  }
+
+  .hero-benefits h2 strong {
+    display: block;
+  }
+
+  .hero-benefits p {
+    margin: 2px auto 0;
+    max-width: 11ch;
+    font-size: clamp(12px, 3vw, 14px);
+  }
+
+  .hero-benefits svg {
+    width: 27px;
+  }
+
+  .hero-benefits .hero-benefit-wide {
+    display: none;
+  }
+
+  .hero-benefit-short {
+    display: inline;
+  }
+
+  .hero-bottom > a {
+    display: none;
+  }
+}
+
+@keyframes mobile-truck-drive {
+  from { transform: translateX(76%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes mobile-wheel-roll {
+  /* Travel distance divided by the tire circumference gives 2.42 turns. */
+  from { transform: rotate(872deg); }
+  to { transform: rotate(0deg); }
+}
+
+@media (max-width: 760px) and (prefers-reduced-motion: reduce) {
+  .mobile-hero-rig,
+  .mobile-hero-wheel,
+  .hero-actions,
+  .hero-bottom {
+    animation: none;
+  }
+}
