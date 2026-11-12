@@ -92,10 +92,20 @@ fitHeroLines();
 setTimeout(()=>heroHeading.classList.add('motion-settled'),4900);
 narrowHero.addEventListener('change',()=>{heroHeading.classList.add('motion-settled');fitHeroLines()});
 
-const brandStrip = document.querySelector('.brand-strip');
-if (brandStrip) {
+const heroBrandViewport = document.querySelector('#truck-brands .brand-viewport');
+const serviceBrands = document.querySelector('.brand-strip--services');
+if (heroBrandViewport && serviceBrands) {
+  const viewport = heroBrandViewport.cloneNode(true);
+  viewport.removeAttribute('tabindex');
+  for (const logo of viewport.querySelectorAll('img')) logo.loading = 'lazy';
+  serviceBrands.append(viewport);
+  serviceBrands.hidden = false;
+}
+
+for (const brandStrip of document.querySelectorAll('.brand-strip:not([hidden])')) {
   const viewport = brandStrip.querySelector('.brand-viewport');
   const track = brandStrip.querySelector('.brand-track');
+  const keyboardScrollable = viewport.hasAttribute('tabindex');
   const duplicate = track.firstElementChild.cloneNode(true);
   duplicate.setAttribute('aria-hidden', 'true');
   track.append(duplicate);
@@ -103,9 +113,87 @@ if (brandStrip) {
     const animate = !reduced.matches;
     brandStrip.classList.toggle('is-animated', animate);
     duplicate.hidden = !animate;
-    viewport.tabIndex = animate ? -1 : 0;
+    if (keyboardScrollable) viewport.tabIndex = animate ? -1 : 0;
     if (animate) viewport.scrollLeft = 0;
   };
   reduced.addEventListener('change', setBrandMotion);
   setBrandMotion();
+}
+
+const priceLayout = document.querySelector('.price-layout');
+if (priceLayout) {
+  const picker = priceLayout.querySelector('.price-picker');
+  const menu = picker.querySelector('.price-menu');
+  const categoryTrigger = priceLayout.querySelector('.price-category-trigger');
+  const categoryDialog = priceLayout.querySelector('.price-category-dialog');
+  const categoryOptions = categoryDialog.querySelector('.price-category-options');
+  const panels = [...priceLayout.querySelectorAll('.price-panel')];
+  const titles = panels.map(panel => panel.querySelector('.price-panel-title').textContent);
+  const tabs = titles.map((title, index) => {
+    const tab = document.createElement('button');
+    tab.type = 'button';
+    tab.textContent = title;
+    tab.setAttribute('role', 'tab');
+    tab.setAttribute('aria-controls', panels[index].id);
+    tab.addEventListener('click', () => showPriceCategory(index));
+    menu.append(tab);
+    panels[index].setAttribute('role', 'tabpanel');
+    return tab;
+  });
+  const choices = titles.map((title, index) => {
+    const choice = document.createElement('button');
+    choice.type = 'button';
+    choice.textContent = title;
+    choice.addEventListener('click', () => {
+      showPriceCategory(index);
+      closeDialog(categoryDialog);
+    });
+    categoryOptions.append(choice);
+    return choice;
+  });
+
+  function showPriceCategory(index) {
+    panels.forEach((panel, position) => {
+      const active = position === index;
+      panel.hidden = !active;
+      panel.tabIndex = active ? 0 : -1;
+      tabs[position].setAttribute('aria-selected', String(active));
+      tabs[position].tabIndex = active ? 0 : -1;
+      choices[position].setAttribute('aria-current', String(active));
+    });
+    categoryTrigger.setAttribute('aria-describedby', panels[index].getAttribute('aria-labelledby'));
+  }
+
+  categoryTrigger.addEventListener('click', () => {
+    openDialog(categoryDialog);
+    categoryTrigger.setAttribute('aria-expanded', 'true');
+    categoryOptions.querySelector('[aria-current="true"]').focus();
+  });
+  categoryDialog.addEventListener('close', () => categoryTrigger.setAttribute('aria-expanded', 'false'));
+  narrowHero.addEventListener('change', event => {
+    if (!event.matches && categoryDialog.open) {
+      closeDialog(categoryDialog);
+      menu.querySelector('[aria-selected="true"]').focus();
+    }
+  });
+  menu.addEventListener('keydown', event => {
+    const current = tabs.indexOf(event.target);
+    const destinations = {
+      ArrowUp: (current + tabs.length - 1) % tabs.length,
+      ArrowDown: (current + 1) % tabs.length,
+      Home: 0,
+      End: tabs.length - 1,
+    };
+    const destination = destinations[event.key];
+    if (current < 0 || destination === undefined) return;
+
+    event.preventDefault();
+    showPriceCategory(destination);
+    tabs[destination].focus();
+  });
+
+  const linkedCategory = panels.findIndex(panel => '#' + panel.id === location.hash);
+  showPriceCategory(Math.max(0, linkedCategory));
+  picker.hidden = false;
+  priceLayout.classList.add('has-price-picker');
 }

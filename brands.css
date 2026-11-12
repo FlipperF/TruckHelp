@@ -52,8 +52,33 @@
   max-height: 25px;
 }
 .brand-logo--light { filter: grayscale(1) invert(1) contrast(1.07); }
+.services .section:has(.brand-strip--services:not([hidden])) {
+  padding-block-end: clamp(22px, 2vw, 32px);
+}
+.brand-strip--services {
+  padding-block: clamp(16px, 1.4vw, 24px) 0;
+}
+.brand-strip--services.is-animated .brand-viewport {
+  mask-image: none;
+}
+.brand-strip--services .brand-list li {
+  height: clamp(52px, 4.4vw, 64px);
+}
+.brand-strip--services .brand-logo {
+  filter: grayscale(1) invert(1) contrast(1.07);
+  opacity: .5;
+}
+.brand-strip--services .brand-logo--light {
+  filter: grayscale(1) contrast(1.07);
+}
 @media (prefers-reduced-motion: reduce) {
   .brand-strip.is-animated .brand-viewport { overflow-x: auto; mask-image: none; }
   .brand-strip.is-animated .brand-track { animation: none; }
   .brand-list[aria-hidden] { display: none; }
+  .brand-strip--services .brand-track { width: 100%; }
+  .brand-strip--services .brand-list {
+    justify-content: center;
+    flex-wrap: wrap;
+    padding-inline-end: 0;
+  }
 }
