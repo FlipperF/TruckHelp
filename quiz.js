@@ -43,6 +43,7 @@ function showStep(index) {
   currentStep = index;
   const step = quizSteps[index];
   step.hidden = false;
+  step.dataset.motion = '';
   const number = index + 1;
   progress.value = number;
   stepCount.textContent = `Шаг ${number} из ${quizSteps.length}`;

@@ -10,44 +10,234 @@ let activeCase=0,activePhoto=0,lastFocus=null;
 const leadDialog=document.querySelector('#lead-dialog');
 const videoDialog=document.querySelector('#video-dialog');
 const mediaDialog=document.querySelector('#media-dialog');
+const leadImage = leadDialog.querySelector('.modal-photo img');
+const generalLeadPhoto = {
+  src: leadImage.getAttribute('src'),
+  alt: leadImage.alt,
+};
+const serviceEstimates = new Map(
+  [...document.querySelectorAll('.service-card [data-estimate]')].map(button => {
+    const image = button.closest('.service-card').querySelector('img');
+    return [button.dataset.priceCategory, {
+      subject: button.dataset.lead,
+      estimate: button.dataset.estimate,
+      photo: { src: image.getAttribute('src'), alt: image.alt, cropRight: image.classList.contains('crop-right') },
+    }];
+  })
+);
+serviceEstimates.set('price-visit', {
+  subject: 'Выезд и диагностика',
+  estimate: 'выезда и диагностики',
+  photo: { src: 'assets/price-visit.webp', alt: 'Мастер проводит диагностику грузовика на выезде', cropRight: true },
+});
 function openDialog(d){lastFocus=document.activeElement;d.showModal();document.body.classList.add('locked')}
 function closeDialog(d){d.querySelectorAll('video').forEach(v=>v.pause());d.close();document.body.classList.remove('locked');lastFocus?.focus()}
-function lead(subject, estimate = false) {
-  leadDialog.querySelector('#lead-title').textContent = estimate ? 'Расчёт стоимости' : subject;
+function lead({ subject, estimate, photo = generalLeadPhoto }) {
+  leadDialog.querySelector('#lead-title').textContent = estimate ? `Расчёт стоимости ${estimate}` : 'Заказать звонок мастера';
   leadDialog.querySelector('.modal-copy > p').textContent = estimate
-    ? `${subject}. Уточним детали и сориентируем по цене.`
-    : 'Уточним поломку и согласуем выезд.';
+    ? 'Оставьте номер. Перезвоним, уточним детали и сориентируем по стоимости работ.'
+    : 'Перезвоним, уточним поломку и согласуем выезд.';
+  leadImage.src = photo.src;
+  leadImage.alt = photo.alt;
+  leadImage.classList.toggle('crop-right', Boolean(photo.cropRight));
   leadDialog.querySelector('[name=subject]').value = subject;
-  leadDialog.querySelector('.form-status').textContent = '';
+  clearLeadFeedback(leadDialog.querySelector('form'));
   openDialog(leadDialog);
 }
 document.addEventListener('click', event => {
   const trigger = event.target.closest('[data-lead]');
-  if (trigger) lead(trigger.dataset.lead, trigger.hasAttribute('data-estimate'));
+  if (trigger) {
+    lead(serviceEstimates.get(trigger.dataset.priceCategory) ?? { subject: trigger.dataset.lead });
+  }
   const close = event.target.closest('[data-close]');
   if (close) closeDialog(close.closest('dialog'));
   if (event.target.closest('[data-info]')) openDialog(document.querySelector('#info-dialog'));
 });
 document.querySelectorAll('dialog').forEach(d=>{d.addEventListener('cancel',()=>{d.querySelectorAll('video').forEach(v=>v.pause());document.body.classList.remove('locked')});d.addEventListener('close',()=>document.body.classList.remove('locked'));d.addEventListener('click',e=>{if(e.target!==d)return;const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)closeDialog(d)})});
-function photos(){return works[activeCase].media.filter(m=>m.type==='image')}
-function renderCase(){const w=works[activeCase];activePhoto=0;['title','vehicle','location','problem','solution'].forEach(k=>document.querySelector('#portfolio-'+k).textContent=w[k]);document.querySelector('#case-position').textContent=(activeCase+1)+' / '+works.length;const dots=document.querySelector('#case-dots');dots.replaceChildren();works.forEach((w,i)=>{const b=document.createElement('button');b.setAttribute('aria-label','Работа '+(i+1)+': '+w.title);b.setAttribute('aria-pressed',String(i===activeCase));b.classList.toggle('active',i===activeCase);b.addEventListener('click',()=>{activeCase=i;renderCase()});dots.append(b)});renderPhoto()}
-function renderPhoto(){const items=photos(),m=items[activePhoto];const img=document.querySelector('#portfolio-image');img.src=m.src;img.alt=m.alt;const thumbs=document.querySelector('#portfolio-thumbs');thumbs.replaceChildren();items.forEach((m,i)=>{const b=document.createElement('button');b.classList.toggle('selected',i===activePhoto);b.setAttribute('aria-pressed',String(i===activePhoto));b.setAttribute('aria-label','Фото '+(i+1));const image=document.createElement('img');image.src=m.src;image.alt='';b.append(image);b.addEventListener('click',()=>{activePhoto=i;renderPhoto()});thumbs.append(b)});if(mediaDialog.open)renderLargePhoto()}
-document.querySelector('#prev-case').addEventListener('click',()=>{activeCase=(activeCase-1+works.length)%works.length;renderCase()});document.querySelector('#next-case').addEventListener('click',()=>{activeCase=(activeCase+1)%works.length;renderCase()});
-document.querySelector('#similar-case').addEventListener('click',()=>lead(works[activeCase].title));
-function renderLargePhoto(){const items=photos(),m=items[activePhoto];const stage=document.querySelector('#media-stage');const image=document.createElement('img');image.src=m.src;image.alt=m.alt;stage.replaceChildren(image);document.querySelector('#media-position').textContent=(activePhoto+1)+' / '+items.length;document.querySelector('#prev-media').disabled=items.length<2;document.querySelector('#next-media').disabled=items.length<2}
-document.querySelector('#portfolio-main').addEventListener('click',()=>{renderLargePhoto();openDialog(mediaDialog)});
-document.querySelector('#prev-media').addEventListener('click',()=>{activePhoto=(activePhoto-1+photos().length)%photos().length;renderPhoto()});document.querySelector('#next-media').addEventListener('click',()=>{activePhoto=(activePhoto+1)%photos().length;renderPhoto()});mediaDialog.addEventListener('keydown',e=>{if(e.key==='ArrowRight')document.querySelector('#next-media').click();if(e.key==='ArrowLeft')document.querySelector('#prev-media').click()});
-function showVideo(){const media=works[activeCase].media.find(m=>m.type==='video');const stage=document.querySelector('#video-stage');stage.querySelector('video')?.pause();stage.replaceChildren();document.querySelector('#video-empty').hidden=Boolean(media);document.querySelector('#video-title').textContent=works[activeCase].title;if(media){const v=document.createElement('video');v.src=media.src;v.controls=true;v.playsInline=true;v.preload='metadata';if(media.poster)v.poster=media.poster;v.setAttribute('aria-label','Видео: '+works[activeCase].title);v.addEventListener('error',()=>{stage.replaceChildren();const p=document.createElement('p');p.textContent='Не удалось воспроизвести видео. Используйте MP4 (H.264) или WebM.';stage.append(p);document.querySelector('#video-empty').hidden=false});stage.append(v)}}
-document.querySelector('#portfolio-video').addEventListener('click',()=>{showVideo();openDialog(videoDialog)});let videoUrls=[];document.querySelector('#video-file').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;if(!['video/mp4','video/webm'].includes(f.type)){alert('Выберите MP4 или WebM.');return}const url=URL.createObjectURL(f);videoUrls.push(url);works[activeCase].media=works[activeCase].media.filter(m=>m.type!=='video');works[activeCase].media.push({type:'video',src:url});showVideo();e.target.value=''});window.addEventListener('beforeunload',()=>videoUrls.forEach(u=>URL.revokeObjectURL(u)));
-document.querySelectorAll('[data-form]').forEach(f=>{const p=f.querySelector('[name=phone]');p.addEventListener('input',()=>p.setCustomValidity(''));f.addEventListener('submit',e=>{e.preventDefault();const n=p.value.replace(/\D/g,'');if(n.length<10||n.length>15){p.setCustomValidity('Введите номер телефона: от 10 до 15 цифр.');p.reportValidity();return}f.querySelector('.form-status').textContent='Демонстрация: данные не отправлены. Приём заявок ещё не подключён.';f.reset()})});
-const menu=document.querySelector('.menu-toggle');menu.addEventListener('click',()=>{const open=menu.getAttribute('aria-expanded')!=='true';menu.setAttribute('aria-expanded',String(open));document.querySelector('.header nav').classList.toggle('open',open)});document.querySelectorAll('.header nav a').forEach(a=>a.addEventListener('click',()=>{menu.setAttribute('aria-expanded','false');document.querySelector('.header nav').classList.remove('open')}));
-const reduced=matchMedia('(prefers-reduced-motion: reduce)');const hero=document.querySelector('.hero'),track=document.querySelector('.hero-track'),bar=document.querySelector('.mobile-action');let scheduled=false;
-const priceQuiz=document.querySelector('#price');
+const portfolioImage = document.querySelector('#portfolio-image');
+const portfolioDetails = document.querySelector('.portfolio-details');
+const portfolioThumbs = document.querySelector('#portfolio-thumbs');
+const casePosition = document.querySelector('#case-position');
+const mediaStage = document.querySelector('#media-stage');
+const previousMedia = document.querySelector('#prev-media');
+const nextMedia = document.querySelector('#next-media');
+const slideAnimations = new WeakMap();
+
+function animateSlide(element, direction = 0) {
+  slideAnimations.get(element)?.cancel();
+  if (reduced.matches) return;
+
+  const animation = element.animate([
+    { opacity: .45, translate: `${direction * 8}px 0` },
+    { opacity: 1, translate: '0 0' },
+  ], { duration: 230, easing: 'ease-out' });
+  slideAnimations.set(element, animation);
+}
+
+function photos() {
+  return works[activeCase].media.filter(item => item.type === 'image');
+}
+
+function renderCase(direction = 0) {
+  const work = works[activeCase];
+  activePhoto = 0;
+  for (const key of ['title', 'vehicle', 'location', 'problem', 'solution']) {
+    document.querySelector('#portfolio-' + key).textContent = work[key];
+  }
+  casePosition.textContent = `${activeCase + 1} / ${works.length}`;
+  portfolioThumbs.replaceChildren(...photos().map((photo, index) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.setAttribute('aria-label', `Фото ${index + 1}`);
+    const image = document.createElement('img');
+    image.src = photo.src;
+    image.alt = '';
+    button.append(image);
+    button.addEventListener('click', () => {
+      if (activePhoto !== index) changePhoto(index);
+    });
+    return button;
+  }));
+  renderPhoto(direction);
+  if (direction) animateSlide(portfolioDetails);
+}
+
+function renderPhoto(direction = 0) {
+  const photo = photos()[activePhoto];
+  portfolioImage.src = photo.src;
+  portfolioImage.alt = photo.alt;
+  [...portfolioThumbs.children].forEach((button, index) => {
+    button.setAttribute('aria-pressed', String(index === activePhoto));
+  });
+  if (direction) animateSlide(portfolioImage, direction);
+  if (mediaDialog.open) renderLargePhoto(direction);
+}
+
+function changeCase(direction) {
+  activeCase = (activeCase + direction + works.length) % works.length;
+  renderCase(direction);
+}
+
+function changePhoto(index) {
+  const direction = Math.sign(index - activePhoto);
+  activePhoto = index;
+  renderPhoto(direction);
+}
+
+document.querySelector('#prev-case').addEventListener('click', () => changeCase(-1));
+document.querySelector('#next-case').addEventListener('click', () => changeCase(1));
+document.querySelector('.case-nav').addEventListener('keydown', event => {
+  if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+  event.preventDefault();
+  changeCase(event.key === 'ArrowLeft' ? -1 : 1);
+});
+document.querySelector('#similar-case').addEventListener('click', () => lead({ subject: works[activeCase].title }));
+
+function renderLargePhoto(direction = 0) {
+  const items = photos();
+  const photo = items[activePhoto];
+  const image = document.createElement('img');
+  image.src = photo.src;
+  image.alt = photo.alt;
+  mediaStage.replaceChildren(image);
+  document.querySelector('#media-position').textContent = `${activePhoto + 1} / ${items.length}`;
+  previousMedia.disabled = nextMedia.disabled = items.length < 2;
+  if (direction) animateSlide(image, direction);
+}
+
+document.querySelector('#portfolio-main').addEventListener('click', () => {
+  renderLargePhoto();
+  openDialog(mediaDialog);
+});
+previousMedia.addEventListener('click', () => changePhoto((activePhoto - 1 + photos().length) % photos().length));
+nextMedia.addEventListener('click', () => changePhoto((activePhoto + 1) % photos().length));
+mediaDialog.addEventListener('keydown', event => {
+  if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+  event.preventDefault();
+  (event.key === 'ArrowLeft' ? previousMedia : nextMedia).click();
+});
+const portfolioPlayer = document.querySelector('#portfolio-player');
+
+document.querySelector('#portfolio-video').addEventListener('click', () => {
+  const work = works[activeCase];
+  const video = work.media.find(item => item.type === 'video' && item.src);
+  portfolioPlayer.controls = Boolean(video);
+  portfolioPlayer.setAttribute('aria-label', `Видео: ${work.title}`);
+  if (video?.poster) portfolioPlayer.poster = video.poster;
+  else portfolioPlayer.removeAttribute('poster');
+
+  if (video) {
+    portfolioPlayer.src = video.src;
+  } else if (portfolioPlayer.hasAttribute('src')) {
+    portfolioPlayer.removeAttribute('src');
+    portfolioPlayer.load();
+  }
+  openDialog(videoDialog);
+});
+
+portfolioPlayer.addEventListener('error', () => {
+  portfolioPlayer.controls = false;
+});
+function clearLeadFeedback(form) {
+  const invalid = form.querySelector('[aria-invalid="true"]');
+  invalid?.removeAttribute('aria-invalid');
+  invalid?.removeAttribute('aria-describedby');
+  form.querySelector('.form-error').textContent = '';
+  form.querySelector('.form-status').textContent = '';
+}
+
+for (const form of document.querySelectorAll('[data-form]')) {
+  const error = form.querySelector('.form-error');
+  const status = form.querySelector('.form-status');
+  form.addEventListener('input', () => clearLeadFeedback(form));
+  form.addEventListener('submit', event => {
+    event.preventDefault();
+    clearLeadFeedback(form);
+
+    for (const field of form.querySelectorAll('input[required]')) {
+      const value = field.value.trim();
+      let message = '';
+      if (!value) {
+        message = field.name === 'phone' ? 'Введите номер телефона.' : 'Введите ваше имя.';
+      } else if (field.name === 'phone' && (!/^[\d+\s().-]+$/.test(value) || !/^\d{10,15}$/.test(value.replace(/\D/g, '')))) {
+        message = 'Введите номер телефона от 10 до 15 цифр.';
+      }
+      if (!message) continue;
+
+      field.setAttribute('aria-invalid', 'true');
+      field.setAttribute('aria-describedby', error.id);
+      error.textContent = message;
+      field.focus();
+      return;
+    }
+
+    form.reset();
+    status.textContent = 'Демонстрация: данные не отправлены. Приём заявок ещё не подключён.';
+  });
+}
+const menuToggle = document.querySelector('.menu-toggle');
+const headerMenu = document.querySelector('#header-menu');
+function setHeaderMenu(open) {
+  menuToggle.setAttribute('aria-expanded', String(open));
+  menuToggle.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
+  headerMenu.classList.toggle('open', open);
+}
+menuToggle.addEventListener('click', () => setHeaderMenu(!headerMenu.classList.contains('open')));
+document.addEventListener('click', event => {
+  if (headerMenu.classList.contains('open') && (!event.target.closest('#header-menu, .menu-toggle') || event.target.closest('#header-menu a'))) {
+    setHeaderMenu(false);
+  }
+});
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && headerMenu.classList.contains('open') && menuToggle.getClientRects().length) {
+    setHeaderMenu(false);
+    menuToggle.focus();
+  }
+});
+const reduced=matchMedia('(prefers-reduced-motion: reduce)');const hero=document.querySelector('.hero'),track=document.querySelector('.hero-track');let scheduled=false;
 function scrollFrame(){
  scheduled=false;
  const r=track.getBoundingClientRect(),height=r.height;
- const quizBounds=priceQuiz.getBoundingClientRect();
- const quizInView=quizBounds.top<innerHeight&&quizBounds.bottom>0;
  const distance=Math.max(0,-r.top),progress=Math.min(1,distance/height);
  if(!reduced.matches){
   hero.style.setProperty('--hero-shift',Math.min(distance*.36,height*.36)+'px');
@@ -56,11 +246,8 @@ function scrollFrame(){
  }else{
   hero.style.removeProperty('--hero-shift');hero.style.removeProperty('--photo-shift');hero.style.removeProperty('--hero-darkness');
  }
- bar.classList.toggle('visible',scrollY>height*.6&&!quizInView);
 }
 addEventListener('scroll',()=>{if(!scheduled){scheduled=true;requestAnimationFrame(scrollFrame)}},{passive:true});addEventListener('resize',scrollFrame);scrollFrame();renderCase();setTimeout(()=>document.querySelector('.intro')?.remove(),2600);
-
-document.querySelector('#select-video').addEventListener('click',()=>document.querySelector('#video-file').click());
 
 reduced.addEventListener('change',scrollFrame);
 
@@ -127,6 +314,7 @@ if (priceLayout) {
   const categoryTrigger = priceLayout.querySelector('.price-category-trigger');
   const categoryDialog = priceLayout.querySelector('.price-category-dialog');
   const categoryOptions = categoryDialog.querySelector('.price-category-options');
+  const estimateButton = priceLayout.querySelector('[data-price-estimate]');
   const panels = [...priceLayout.querySelectorAll('.price-panel')];
   const titles = panels.map(panel => panel.querySelector('.price-panel-title').textContent);
   const tabs = titles.map((title, index) => {
@@ -153,6 +341,7 @@ if (priceLayout) {
   });
 
   function showPriceCategory(index) {
+    const changed = panels[index].hidden;
     panels.forEach((panel, position) => {
       const active = position === index;
       panel.hidden = !active;
@@ -162,6 +351,9 @@ if (priceLayout) {
       choices[position].setAttribute('aria-current', String(active));
     });
     categoryTrigger.setAttribute('aria-describedby', panels[index].getAttribute('aria-labelledby'));
+    estimateButton.dataset.lead = titles[index];
+    estimateButton.dataset.priceCategory = panels[index].id;
+    if (changed) animateSlide(panels[index]);
   }
 
   categoryTrigger.addEventListener('click', () => {

@@ -73,4 +73,158 @@
 @keyframes intro-logo-depart { to { transform: translateY(-125%); opacity: 0; } }
 @media(max-width:760px){.hero-track{height:calc(100svh - 95px);min-height:620px;max-height:850px}.hero{height:100%;min-height:0;max-height:none;top:auto}.hero-eta > span{animation-delay:3.39s}#advantages{padding-inline:6%}}
 @media(max-width:460px){.hero-track{height:calc(100svh - 95px);min-height:600px}.hero{min-height:0;top:auto}}
+
+@keyframes interface-enter {
+  from { opacity: .45; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes sheet-enter {
+  from { transform: translateY(100%); }
+  to { transform: none; }
+}
+.quiz-form [data-motion]:not([hidden]),
+.quiz-form :is([data-quiz-other], .quiz-error, .quiz-result):not([hidden]),
+.form-status:not(:empty) {
+  animation: interface-enter .22s ease-out;
+}
+.price-category-trigger .price-category-chevron {
+  transition: transform .2s ease;
+}
+.price-category-trigger[aria-expanded="true"] .price-category-chevron {
+  transform: rotate(180deg);
+}
+.price-category-dialog[open] {
+  animation: sheet-enter .28s var(--ease);
+}
+@media (max-width: 1399px) {
+  .header nav:not(.open),
+  .header nav.open {
+    position: absolute;
+    inset: calc(100% - 8px) 8px auto auto;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 10px;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 15px 30px #0002;
+    font-size: 16px;
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: opacity .18s ease, transform .18s var(--ease), visibility 0s .18s;
+  }
+  .header nav.open {
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+    transform: none;
+    transition-delay: 0s;
+  }
+  .header nav a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding-inline: 10px;
+    border-radius: 4px;
+    transition: background .18s ease, color .18s ease;
+  }
+  .header nav a:active {
+    background: #fff0e8;
+  }
+  .menu-toggle span {
+    transition: transform .18s ease;
+  }
+  .menu-toggle[aria-expanded="true"] span:first-child {
+    transform: translateY(3.5px) rotate(45deg);
+  }
+  .menu-toggle[aria-expanded="true"] span:last-child {
+    transform: translateY(-3.5px) rotate(-45deg);
+  }
+}
+@media (max-width: 760px) {
+  .header nav:not(.open),
+  .header nav.open {
+    inset: calc(100% - 4px) 0 auto;
+  }
+}
+.faq summary::before,
+.faq summary::after,
+.faq details[open] summary::after {
+  content: "";
+  position: absolute;
+  inset: 50% 4px auto auto;
+  width: 16px;
+  height: 2px;
+  border-radius: 2px;
+  background: #a43909;
+  translate: 0 -50%;
+}
+.faq summary::after {
+  rotate: 90deg;
+  transition: rotate .22s var(--ease), opacity .18s ease;
+}
+.faq details[open] summary::after {
+  rotate: 0deg;
+  opacity: 0;
+}
+@supports (interpolate-size: allow-keywords) and selector(::details-content) {
+  .faq details {
+    interpolate-size: allow-keywords;
+  }
+  .faq details::details-content {
+    block-size: 0;
+    overflow: clip;
+    opacity: 0;
+    transition: block-size .24s ease, opacity .2s ease, content-visibility .24s allow-discrete;
+  }
+  .faq details[open]::details-content {
+    block-size: auto;
+    opacity: 1;
+  }
+}
+@supports not ((interpolate-size: allow-keywords) and selector(::details-content)) {
+  .faq details[open] > p {
+    animation: interface-enter .22s ease-out;
+  }
+}
+@supports (transition-behavior: allow-discrete) {
+  dialog {
+    opacity: 0;
+    translate: 0 14px;
+    transition: opacity .2s ease, translate .24s var(--ease), display .24s allow-discrete, overlay .24s allow-discrete;
+  }
+  dialog[open],
+  .price-category-dialog[open] {
+    opacity: 1;
+    translate: none;
+    animation: none;
+  }
+  dialog::backdrop {
+    opacity: 0;
+    transition: opacity .24s ease, display .24s allow-discrete, overlay .24s allow-discrete;
+  }
+  dialog[open]::backdrop {
+    opacity: 1;
+  }
+  .price-category-dialog {
+    opacity: 1;
+    translate: 0 100%;
+    transition: translate .28s var(--ease), display .28s allow-discrete, overlay .28s allow-discrete;
+  }
+  @starting-style {
+    dialog[open] {
+      opacity: 0;
+      translate: 0 14px;
+    }
+    dialog[open]::backdrop {
+      opacity: 0;
+    }
+    .price-category-dialog[open] {
+      opacity: 1;
+      translate: 0 100%;
+    }
+  }
+}
 @media(prefers-reduced-motion:reduce){.intro{display:none}.hero,.hero-bg,.hero-bg img,.hero h1>.hero-line>span,.hero-eta > span{animation:none!important;transform:none!important;clip-path:none!important;will-change:auto!important}.hero-dimmer{opacity:0!important;will-change:auto!important}}
