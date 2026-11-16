@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Truck Help — ремонт грузовиков на выезде</title><meta name="description" content="Выездной ремонт грузовиков, прицепов и полуприцепов в Москве и Московской области. Выезд в течение 1 часа. Круглосуточно."><link rel="stylesheet" href="assets/wix.css"><link rel="stylesheet" href="v2.css?v=mobile-scroll"><link rel="stylesheet" href="motion.css?v=interface-motion"><link rel="stylesheet" href="quiz.css?v=control-states"><link rel="stylesheet" href="brands.css?v=service-edges"><link rel="preload" as="image" href="assets/mobile-hero-truck.webp" media="(max-width: 760px)"><link rel="stylesheet" href="mobile-hero.css?v=3"><script src="app.js?v=mobile-scroll" defer></script><script src="quiz.js?v=interface-motion" defer></script></head>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Truck Help — ремонт грузовиков на выезде</title><meta name="description" content="Выездной ремонт грузовиков, прицепов и полуприцепов в Москве и Московской области. Выезд в течение 1 часа. Круглосуточно."><link rel="stylesheet" href="assets/wix.css"><link rel="stylesheet" href="v2.css?v=sticky-header-spacing"><link rel="stylesheet" href="motion.css?v=sticky-header"><link rel="stylesheet" href="quiz.css?v=control-states"><link rel="stylesheet" href="brands.css?v=service-edges"><link rel="preload" as="image" href="assets/mobile-hero-truck.webp" media="(max-width: 760px)"><link rel="stylesheet" href="mobile-hero.css?v=3"><script src="app.js?v=sticky-header" defer></script><script src="quiz.js?v=interface-motion" defer></script></head>
 <body id="top">
 <div class="intro" aria-hidden="true">
   <div class="intro-logo">
@@ -18,10 +18,10 @@
   </div>
 </div>
 <a class="skip" href="#main">Перейти к содержимому</a>
+<div class="header-shell">
 <header class="header">
   <a class="logo" href="#top" aria-label="Truck Help, главная"><img src="assets/truck-help-logo.png" width="576" height="62" alt="Truck Help" decoding="async"></a>
   <span class="descriptor">Выездной ремонт<br>грузовиков</span>
-  <button class="button small header-call" data-lead="Вызвать мастера">Вызвать мастера <span>↗</span></button>
   <button class="menu-toggle" aria-label="Открыть меню" aria-expanded="false" aria-controls="header-menu"><span></span><span></span></button>
   <nav id="header-menu" aria-label="Меню">
     <a href="#advantages">Преимущества</a>
@@ -33,17 +33,18 @@
   <div class="header-contact">
     <img class="header-portrait" src="assets/master-header.webp" alt="" width="52" height="52" decoding="async">
     <div class="header-contact-details">
-      <span class="header-hours">Работаем круглосуточно</span>
+      <span class="header-hours">Круглосуточно</span>
       <a class="header-phone" href="tel:+74999999999">+7 (499) 999-99-99</a>
     </div>
   </div>
   <div class="messenger-links header-messengers" role="group" aria-label="Мессенджеры Truck Help">
-    <button class="messenger-icon messenger-icon--max" type="button" data-info aria-label="MAX (демо)" title="MAX"><img src="assets/messengers/max.svg" alt="" width="24" height="24"></button>
-    <button class="messenger-icon messenger-icon--whatsapp" type="button" data-info aria-label="WhatsApp (демо)" title="WhatsApp"><img src="assets/messengers/whatsapp.png" alt="" width="24" height="24"></button>
-    <button class="messenger-icon messenger-icon--telegram" type="button" data-info aria-label="Telegram (демо)" title="Telegram"><img src="assets/messengers/telegram.svg" alt="" width="24" height="24"></button>
+    <button class="messenger-icon messenger-icon--max" type="button" disabled aria-label="MAX" title="MAX"><img src="assets/messengers/max.svg" alt="" width="24" height="24"></button>
+    <button class="messenger-icon messenger-icon--whatsapp" type="button" disabled aria-label="WhatsApp" title="WhatsApp"><img src="assets/messengers/whatsapp.png" alt="" width="24" height="24"></button>
+    <button class="messenger-icon messenger-icon--telegram" type="button" disabled aria-label="Telegram" title="Telegram"><img src="assets/messengers/telegram.svg" alt="" width="24" height="24"></button>
   </div>
   <button class="button small header-callback" type="button" data-lead="Бесплатный звонок">Бесплатный звонок</button>
 </header>
+</div>
 <main id="main">
 <div class="hero-track">
   <section class="hero" aria-labelledby="hero-title">
@@ -278,7 +279,7 @@
     <h3>Заменим сцепление и починим <em>КПП</em></h3>
     <p>Меняем комплект сцепления, ПГУ и маховик. Снимаем и устанавливаем КПП, устраняем мелкие неисправности и адаптируем роботизированные коробки.</p>
   </div>
-  <button class="button" type="button" data-lead="Замена сцепления и ремонт КПП" data-estimate="работ по сцеплению" data-price-category="price-clutch">Расчёт стоимости</button>
+  <button class="button" type="button" data-lead="Замена сцепления и ремонт КПП" data-estimate="работ по сцеплению" data-price-category="price-clutch">Получить консультацию</button>
 </article>
 <article class="service-card">
   <img src="assets/diagnostics.jpg" alt="Выездная диагностика грузовика" loading="lazy">
@@ -286,7 +287,7 @@
     <h3>Найдём <em>сбой в электрике</em></h3>
     <p>Выезжаем с диагностическим оборудованием. Считываем ошибки, проверяем параметры систем и электрические соединения.</p>
   </div>
-  <button class="button" type="button" data-lead="Автоэлектрика и диагностика" data-estimate="работ по электрике" data-price-category="price-electrical">Расчёт стоимости</button>
+  <button class="button" type="button" data-lead="Автоэлектрика и диагностика" data-estimate="работ по электрике" data-price-category="price-electrical">Получить консультацию</button>
 </article>
 <article class="service-card">
   <img src="assets/trailer.jpg" alt="Ремонт оси полуприцепа" loading="lazy">
@@ -294,7 +295,7 @@
     <h3>Починим прицеп <em>на месте</em></h3>
     <p>Осматриваем тормоза, пневматику и колёсные узлы прицепов и полуприцепов. Подскажем, что можно отремонтировать на месте.</p>
   </div>
-  <button class="button" type="button" data-lead="Ремонт прицепа или полуприцепа" data-estimate="ремонта прицепа" data-price-category="price-trailers">Расчёт стоимости</button>
+  <button class="button" type="button" data-lead="Ремонт прицепа или полуприцепа" data-estimate="ремонта прицепа" data-price-category="price-trailers">Получить консультацию</button>
 </article>
 <article class="service-card">
   <img src="assets/hero.jpg" alt="Механик у двигателя грузовика" loading="lazy">
@@ -302,7 +303,7 @@
     <h3>Проверим двигатель <em>и подачу топлива</em></h3>
     <p>Диагностируем топливную систему. По ситуации снимаем форсунки, регулируем клапаны или меняем прокладку ГБЦ.</p>
   </div>
-  <button class="button" type="button" data-lead="Двигатель и топливная система" data-estimate="работ по двигателю и топливной системе" data-price-category="price-engine">Расчёт стоимости</button>
+  <button class="button" type="button" data-lead="Двигатель и топливная система" data-estimate="работ по двигателю и топливной системе" data-price-category="price-engine">Получить консультацию</button>
 </article>
 <article class="service-card">
   <img src="assets/trailer.jpg" alt="Работа с тормозами полуприцепа" loading="lazy" class="crop-right">
@@ -310,7 +311,7 @@
     <h3>Ремонт <em>тормозов</em> и пневматики</h3>
     <p>Проверяем работу тормозов, ищем утечки воздуха и устраняем неисправности пневмосистемы и компрессора.</p>
   </div>
-  <button class="button" type="button" data-lead="Пневматика и тормоза" data-estimate="ремонта тормозов и пневматики" data-price-category="price-brakes">Расчёт стоимости</button>
+  <button class="button" type="button" data-lead="Пневматика и тормоза" data-estimate="ремонта тормозов и пневматики" data-price-category="price-brakes">Получить консультацию</button>
 </article>
 <article class="service-card">
   <img src="assets/clutch.jpg" alt="Агрегатный ремонт на месте" loading="lazy" class="crop-right">
@@ -318,7 +319,7 @@
     <h3>Ремонт <em>ходовой</em> и рулевого управления</h3>
     <p>Меняем ступичные подшипники и шпильки, ремонтируем кардан и устраняем неисправности рулевого управления.</p>
   </div>
-  <button class="button" type="button" data-lead="Ходовая и рулевое управление" data-estimate="работ по ходовой и рулевому управлению" data-price-category="price-chassis">Расчёт стоимости</button>
+  <button class="button" type="button" data-lead="Ходовая и рулевое управление" data-estimate="работ по ходовой и рулевому управлению" data-price-category="price-chassis">Получить консультацию</button>
 </article>
 </div>
 <div class="service-bottom"><p>Все марки: европейские, китайские и российские.<br>ZF, Eaton, Fast Gear — механика и роботизированные КПП.</p><button class="text-link" data-lead="Уточнить ремонт моей машины">Уточнить по моей машине ↗</button></div>
@@ -522,9 +523,9 @@
         <div class="consultation-messengers">
           <span>Напишите нам<br>в мессенджер</span>
           <div class="messenger-links" role="group" aria-label="Мессенджеры Truck Help">
-            <button class="messenger-icon messenger-icon--max" type="button" data-info aria-label="MAX (демо)" title="MAX"><img src="assets/messengers/max.svg" alt="" width="24" height="24"></button>
-            <button class="messenger-icon messenger-icon--whatsapp" type="button" data-info aria-label="WhatsApp (демо)" title="WhatsApp"><img src="assets/messengers/whatsapp.png" alt="" width="24" height="24"></button>
-            <button class="messenger-icon messenger-icon--telegram" type="button" data-info aria-label="Telegram (демо)" title="Telegram"><img src="assets/messengers/telegram.svg" alt="" width="24" height="24"></button>
+            <button class="messenger-icon messenger-icon--max" type="button" disabled aria-label="MAX" title="MAX"><img src="assets/messengers/max.svg" alt="" width="24" height="24"></button>
+            <button class="messenger-icon messenger-icon--whatsapp" type="button" disabled aria-label="WhatsApp" title="WhatsApp"><img src="assets/messengers/whatsapp.png" alt="" width="24" height="24"></button>
+            <button class="messenger-icon messenger-icon--telegram" type="button" disabled aria-label="Telegram" title="Telegram"><img src="assets/messengers/telegram.svg" alt="" width="24" height="24"></button>
           </div>
         </div>
       </div>
@@ -576,8 +577,9 @@
 <section id="faq" class="section content faq-section" aria-labelledby="faq-title">
   <header class="section-heading">
     <p class="section-kicker">Частые вопросы</p>
-    <h2 id="faq-title">Выезд ночью и <em>оплата с НДС</em></h2>
-    <p class="section-subtitle">Что можно починить на месте и сколько ждать мастера.</p>
+    <h2 id="faq-title">Ответы на самые <em>популярные вопросы</em></h2>
+    <p class="section-subtitle">Не нашли ответ на свой вопрос? Задайте его мастеру.</p>
+    <button class="button faq-ask" type="button" data-lead="Вопрос мастеру" data-ask-question>Задать вопрос</button>
   </header>
   <div class="faq"><details><summary>Как быстро приедет мастер?</summary><p>Выезд — в течение 1 часа. Время прибытия уточним по вашему местоположению и дорожной ситуации.</p></details><details><summary>Можно заменить сцепление на месте?</summary><p>Да, выполняем выездную замену сцепления. Перед отправлением уточним модель машины и условия на площадке.</p></details><details><summary>Работаете с китайскими грузовиками?</summary><p>Да. Sitrak, Shacman, Howo, FAW, Foton, а также европейские и российские марки.</p></details><details><summary>Можно оплатить с НДС?</summary><p>Да. Принимаем оплату на расчётный счёт, работаем с НДС и без НДС.</p></details><details><summary>Что делать, если поломка ночью?</summary><p>Обращайтесь в любое время. Работаем круглосуточно, включая выходные.</p></details></div></section>
 <section id="contacts" class="consultation closing-contact" aria-labelledby="closing-contact-title">
@@ -599,9 +601,9 @@
       <div class="consultation-messengers">
         <span>Или напишите нам</span>
         <div class="messenger-links" role="group" aria-label="Мессенджеры Truck Help">
-          <button class="messenger-icon messenger-icon--max" type="button" data-info aria-label="MAX (демо)" title="MAX"><img src="assets/messengers/max.svg" alt="" width="24" height="24"></button>
-          <button class="messenger-icon messenger-icon--whatsapp" type="button" data-info aria-label="WhatsApp (демо)" title="WhatsApp"><img src="assets/messengers/whatsapp.png" alt="" width="24" height="24"></button>
-          <button class="messenger-icon messenger-icon--telegram" type="button" data-info aria-label="Telegram (демо)" title="Telegram"><img src="assets/messengers/telegram.svg" alt="" width="24" height="24"></button>
+          <button class="messenger-icon messenger-icon--max" type="button" disabled aria-label="MAX" title="MAX"><img src="assets/messengers/max.svg" alt="" width="24" height="24"></button>
+          <button class="messenger-icon messenger-icon--whatsapp" type="button" disabled aria-label="WhatsApp" title="WhatsApp"><img src="assets/messengers/whatsapp.png" alt="" width="24" height="24"></button>
+          <button class="messenger-icon messenger-icon--telegram" type="button" disabled aria-label="Telegram" title="Telegram"><img src="assets/messengers/telegram.svg" alt="" width="24" height="24"></button>
         </div>
       </div>
     </div>
@@ -645,9 +647,9 @@
             <dt>Мессенджеры</dt>
             <dd>
               <div class="messenger-links" role="group" aria-label="Мессенджеры Truck Help">
-                <button class="messenger-icon messenger-icon--max" type="button" data-info aria-label="MAX (демо)" title="MAX"><img src="assets/messengers/max.svg" alt="" width="24" height="24"></button>
-                <button class="messenger-icon messenger-icon--whatsapp" type="button" data-info aria-label="WhatsApp (демо)" title="WhatsApp"><img src="assets/messengers/whatsapp.png" alt="" width="24" height="24"></button>
-                <button class="messenger-icon messenger-icon--telegram" type="button" data-info aria-label="Telegram (демо)" title="Telegram"><img src="assets/messengers/telegram.svg" alt="" width="24" height="24"></button>
+                <button class="messenger-icon messenger-icon--max" type="button" disabled aria-label="MAX" title="MAX"><img src="assets/messengers/max.svg" alt="" width="24" height="24"></button>
+                <button class="messenger-icon messenger-icon--whatsapp" type="button" disabled aria-label="WhatsApp" title="WhatsApp"><img src="assets/messengers/whatsapp.png" alt="" width="24" height="24"></button>
+                <button class="messenger-icon messenger-icon--telegram" type="button" disabled aria-label="Telegram" title="Telegram"><img src="assets/messengers/telegram.svg" alt="" width="24" height="24"></button>
               </div>
             </dd>
           </div>
@@ -679,6 +681,7 @@
         <input type="hidden" name="subject">
         <label>Ваше имя<input name="name" placeholder="Как к вам обращаться" autocomplete="given-name" required></label>
         <label>Номер телефона<input name="phone" type="tel" placeholder="+7 (___) ___-__-__" autocomplete="tel" required></label>
+        <label data-question-field hidden>Ваш вопрос<textarea name="question" rows="3" maxlength="2000" required disabled></textarea></label>
         <button class="button" type="submit">Жду звонка ↗</button>
         <p id="lead-error" class="form-error" role="alert"></p>
         <p class="form-status" role="status"></p>
@@ -699,5 +702,4 @@
   <video id="portfolio-player" playsinline preload="metadata" aria-label="Видео работы"></video>
   <button class="close" type="button" data-close aria-label="Закрыть видео" autofocus>×</button>
 </dialog>
-<dialog id="info-dialog" aria-labelledby="info-title"><button class="close" data-close aria-label="Закрыть">×</button><h2 id="info-title">Демонстрация дизайна</h2><p>Формы не отправляют и не сохраняют данные. Кнопки мессенджеров демонстрационные. Кейсы и фотографии демонстрационные. Перед запуском добавим настоящие контакты, работы, видео и подключим приём заявок.</p></dialog>
 </body></html>

@@ -32,26 +32,40 @@ serviceEstimates.set('price-visit', {
 });
 function openDialog(d){lastFocus=document.activeElement;d.showModal();document.body.classList.add('locked')}
 function closeDialog(d){d.querySelectorAll('video').forEach(v=>v.pause());d.close();document.body.classList.remove('locked');lastFocus?.focus()}
-function lead({ subject, estimate, photo = generalLeadPhoto }) {
-  leadDialog.querySelector('#lead-title').textContent = estimate ? `Расчёт стоимости ${estimate}` : 'Заказать звонок мастера';
-  leadDialog.querySelector('.modal-copy > p').textContent = estimate
-    ? 'Оставьте номер. Перезвоним, уточним детали и сориентируем по стоимости работ.'
-    : 'Перезвоним, уточним поломку и согласуем выезд.';
+function lead({ subject, estimate, photo = generalLeadPhoto, askQuestion = false }) {
+  const form = leadDialog.querySelector('form');
+  const question = form.elements.question;
+  let title = 'Заказать звонок мастера';
+  let description = 'Перезвоним, уточним поломку и согласуем выезд.';
+  if (askQuestion) {
+    title = 'Задать вопрос мастеру';
+    description = 'Напишите вопрос и оставьте номер. Мастер перезвонит и ответит.';
+  } else if (estimate) {
+    title = `Расчёт стоимости ${estimate}`;
+    description = 'Оставьте номер. Перезвоним, уточним детали и сориентируем по стоимости работ.';
+  }
+  leadDialog.querySelector('#lead-title').textContent = title;
+  leadDialog.querySelector('.modal-copy > p').textContent = description;
   leadImage.src = photo.src;
   leadImage.alt = photo.alt;
   leadImage.classList.toggle('crop-right', Boolean(photo.cropRight));
-  leadDialog.querySelector('[name=subject]').value = subject;
-  clearLeadFeedback(leadDialog.querySelector('form'));
+  form.elements.subject.value = subject;
+  question.closest('label').hidden = !askQuestion;
+  question.disabled = !askQuestion;
+  form.querySelector('button[type="submit"]').textContent = askQuestion ? 'Отправить вопрос' : 'Жду звонка ↗';
+  clearLeadFeedback(form);
   openDialog(leadDialog);
 }
 document.addEventListener('click', event => {
   const trigger = event.target.closest('[data-lead]');
   if (trigger) {
-    lead(serviceEstimates.get(trigger.dataset.priceCategory) ?? { subject: trigger.dataset.lead });
+    lead(serviceEstimates.get(trigger.dataset.priceCategory) ?? {
+      subject: trigger.dataset.lead,
+      askQuestion: trigger.hasAttribute('data-ask-question'),
+    });
   }
   const close = event.target.closest('[data-close]');
   if (close) closeDialog(close.closest('dialog'));
-  if (event.target.closest('[data-info]')) openDialog(document.querySelector('#info-dialog'));
 });
 document.querySelectorAll('dialog').forEach(d=>{d.addEventListener('cancel',()=>{d.querySelectorAll('video').forEach(v=>v.pause());document.body.classList.remove('locked')});d.addEventListener('close',()=>document.body.classList.remove('locked'));d.addEventListener('click',e=>{if(e.target!==d)return;const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)closeDialog(d)})});
 const portfolioImage = document.querySelector('#portfolio-image');
@@ -186,6 +200,12 @@ function clearLeadFeedback(form) {
   form.querySelector('.form-status').textContent = '';
 }
 
+const requiredFieldMessages = {
+  name: 'Введите ваше имя.',
+  phone: 'Введите номер телефона.',
+  question: 'Напишите ваш вопрос.',
+};
+
 for (const form of document.querySelectorAll('[data-form]')) {
   const error = form.querySelector('.form-error');
   const status = form.querySelector('.form-status');
@@ -194,11 +214,11 @@ for (const form of document.querySelectorAll('[data-form]')) {
     event.preventDefault();
     clearLeadFeedback(form);
 
-    for (const field of form.querySelectorAll('input[required]')) {
+    for (const field of form.querySelectorAll('input[required]:enabled, textarea[required]:enabled')) {
       const value = field.value.trim();
       let message = '';
       if (!value) {
-        message = field.name === 'phone' ? 'Введите номер телефона.' : 'Введите ваше имя.';
+        message = requiredFieldMessages[field.name];
       } else if (field.name === 'phone' && (!/^[\d+\s().-]+$/.test(value) || !/^\d{10,15}$/.test(value.replace(/\D/g, '')))) {
         message = 'Введите номер телефона от 10 до 15 цифр.';
       }
@@ -217,6 +237,11 @@ for (const form of document.querySelectorAll('[data-form]')) {
 }
 const menuToggle = document.querySelector('.menu-toggle');
 const headerMenu = document.querySelector('#header-menu');
+const headerShell = document.querySelector('.header-shell');
+const headerSizeObserver = new ResizeObserver(([entry]) => {
+  document.documentElement.style.setProperty('--sticky-header-height', `${entry.target.offsetHeight}px`);
+});
+headerSizeObserver.observe(headerShell);
 function setHeaderMenu(open) {
   menuToggle.setAttribute('aria-expanded', String(open));
   menuToggle.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
@@ -239,6 +264,7 @@ function scrollFrame(){
  scheduled=false;
  const r=track.getBoundingClientRect(),height=r.height;
  const distance=Math.max(0,-r.top),progress=Math.min(1,distance/height);
+ headerShell.classList.toggle('is-scrolled', window.scrollY > 12);
  if(!reduced.matches){
   hero.style.setProperty('--hero-shift',Math.min(distance*.36,height*.36)+'px');
   hero.style.setProperty('--photo-shift',Math.min(distance*.08,height*.08)+'px');
