@@ -1,9 +1,174 @@
 /* Portfolio records support any mixture of {type:'image',src,alt} and
    {type:'video',src,poster,alt}. MP4/WebM are native and never autoplay. */
-const works=[
- {id:'clutch',category:'clutch',title:'Замена сцепления на площадке',vehicle:'Европейский тягач · МКПП ZF',location:'Площадка в Московской области',problem:'Передачи включались с трудом, педаль сцепления проваливалась.',solution:'Диагностика привода, замена комплекта сцепления и проверка работы ПГУ.',result:'Пример описания результата: сцепление работает, передачи включаются штатно.',media:[{type:'image',src:'assets/clutch.jpg',alt:'Сцепление при выездном ремонте'},{type:'image',src:'assets/hero.jpg',alt:'Общий вид ремонта тягача'}]},
- {id:'diagnostics',category:'electric',title:'Поиск причины ошибок на стоянке',vehicle:'Грузовой автомобиль',location:'Промышленная стоянка, Москва',problem:'На панели появились ошибки. Нужно было определить причину неисправности.',solution:'Подключение диагностики, проверка параметров и электрических соединений.',result:'Пример описания результата: найдена причина, согласован дальнейший ремонт.',media:[{type:'image',src:'assets/diagnostics.jpg',alt:'Диагностическое оборудование у грузовика'},{type:'image',src:'assets/hero.jpg',alt:'Работа механика у автомобиля'}]},
- {id:'trailer',category:'trailer',title:'Ремонт колёсного узла полуприцепа',vehicle:'Шторный полуприцеп',location:'Грузовая стоянка, Московская область',problem:'Обнаружена неисправность колёсного узла. Продолжать рейс без проверки нельзя.',solution:'Осмотр узла, необходимые ремонтные работы и проверка системы.',result:'Пример описания результата: узел отремонтирован и проверен перед эксплуатацией.',media:[{type:'image',src:'assets/trailer.jpg',alt:'Механик у оси полуприцепа'}]}
+const works = [
+  {
+    "id": "howo-electrostal",
+    "label": "Самосвал HOWO",
+    "category": "clutch",
+    "title": "Замена сцепления HOWO на дороге",
+    "vehicle": "Самосвал HOWO",
+    "location": "Электросталь, на дороге",
+    "problem": "Неисправность сцепления.",
+    "solution": "Привезли запчасти к месту поломки, сняли коробку передач и заменили сцепление, маховик и выжимной подшипник. Все работы выполнили прямо на дороге.",
+    "media": [
+      {
+        "type": "image",
+        "src": "assets/portfolio/howo-01.webp?v=local-redaction",
+        "thumb": "assets/portfolio/howo-01-thumb.webp?v=local-redaction",
+        "alt": "Самосвал HOWO с поднятой кабиной на месте ремонта"
+      },
+      {
+        "type": "image",
+        "src": "assets/portfolio/howo-02.webp",
+        "thumb": "assets/portfolio/howo-02-thumb.webp",
+        "alt": "Снятые узлы сцепления рядом с самосвалом HOWO"
+      },
+      {
+        "type": "image",
+        "src": "assets/portfolio/howo-03.webp",
+        "thumb": "assets/portfolio/howo-03-thumb.webp",
+        "alt": "Общий вид ремонта HOWO на дороге"
+      },
+      {
+        "type": "image",
+        "src": "assets/portfolio/howo-04.webp",
+        "thumb": "assets/portfolio/howo-04-thumb.webp",
+        "alt": "Коробка передач, снятая при ремонте HOWO"
+      },
+      {
+        "type": "video",
+        "src": ""
+      }
+    ]
+  },
+  {
+    "id": "ural-naro-fominsk",
+    "label": "Буровая Урал Next",
+    "category": "clutch",
+    "title": "Замена сцепления Урал Next на буровой",
+    "vehicle": "Буровая установка на базе Урал Next",
+    "location": "Наро-Фоминск, заболоченный участок",
+    "problem": "Требовалась замена сцепления. Машина стояла на заболоченном участке. Модификацию деталей нужно было уточнить после разборки.",
+    "solution": "Настелили металлические листы и разместили на них снятую коробку передач. После разборки подобрали детали и заменили сцепление, маховик и выжимной подшипник.",
+    "media": [
+      {
+        "type": "image",
+        "src": "assets/portfolio/ural-01.webp?v=local-redaction",
+        "thumb": "assets/portfolio/ural-01-thumb.webp?v=local-redaction",
+        "alt": "Буровая установка на базе Урал Next на месте выезда"
+      },
+      {
+        "type": "image",
+        "src": "assets/portfolio/ural-02.webp?v=local-redaction",
+        "thumb": "assets/portfolio/ural-02-thumb.webp?v=local-redaction",
+        "alt": "Урал Next перед ремонтом сцепления"
+      },
+      {
+        "type": "image",
+        "src": "assets/portfolio/ural-03.webp?v=local-redaction",
+        "thumb": "assets/portfolio/ural-03-thumb.webp?v=local-redaction",
+        "alt": "Урал Next на рабочей площадке"
+      },
+      {
+        "type": "image",
+        "src": "assets/portfolio/ural-04.webp?v=local-redaction",
+        "thumb": "assets/portfolio/ural-04-thumb.webp?v=local-redaction",
+        "alt": "Буровая установка и автомобиль техпомощи"
+      },
+      {
+        "type": "image",
+        "src": "assets/portfolio/ural-05.webp",
+        "thumb": "assets/portfolio/ural-05-thumb.webp",
+        "alt": "Снятый узел сцепления Урал Next"
+      },
+      {
+        "type": "image",
+        "src": "assets/portfolio/ural-06.webp",
+        "thumb": "assets/portfolio/ural-06-thumb.webp",
+        "alt": "Деталь сцепления после разборки"
+      },
+      {
+        "type": "image",
+        "src": "assets/portfolio/ural-07.webp",
+        "thumb": "assets/portfolio/ural-07-thumb.webp",
+        "alt": "Выжимной подшипник сцепления Урал Next"
+      },
+      {
+        "type": "image",
+        "src": "assets/portfolio/ural-08.webp",
+        "thumb": "assets/portfolio/ural-08-thumb.webp",
+        "alt": "Узел сцепления при ремонте буровой"
+      },
+      {
+        "type": "video",
+        "src": ""
+      }
+    ]
+  },
+  {
+    "id": "kamaz-moscow-city",
+    "label": "Автокран КАМАЗ",
+    "category": "pneumatic",
+    "title": "Ремонт автокрана КАМАЗ на стройке",
+    "vehicle": "Автокран КАМАЗ КС-55713-5В",
+    "location": "Москва-Сити, стройплощадка новой очереди",
+    "problem": "Автокран перестал трогаться. Диагностика показала необходимость замены осушителя и пневмогидроусилителя сцепления.",
+    "solution": "На территории стройки заменили осушитель в сборе с фильтром и ПГУ — пневмогидроусилитель, который снижает усилие на педали сцепления.",
+    "media": [
+      {
+        "type": "image",
+        "src": "assets/portfolio/kamaz-01.webp",
+        "thumb": "assets/portfolio/kamaz-01-thumb.webp",
+        "alt": "Автокран КАМАЗ с поднятой кабиной на стройке Москва-Сити"
+      },
+      {
+        "type": "image",
+        "src": "assets/portfolio/kamaz-02.webp",
+        "thumb": "assets/portfolio/kamaz-02-thumb.webp",
+        "alt": "Автокран КАМАЗ на стройплощадке Москва-Сити"
+      },
+      {
+        "type": "image",
+        "src": "assets/portfolio/kamaz-03.webp",
+        "thumb": "assets/portfolio/kamaz-03-thumb.webp",
+        "alt": "Осушитель пневмосистемы КАМАЗ"
+      },
+      {
+        "type": "image",
+        "src": "assets/portfolio/kamaz-04.webp",
+        "thumb": "assets/portfolio/kamaz-04-thumb.webp",
+        "alt": "Осушитель с фильтром при ремонте КАМАЗ"
+      },
+      {
+        "type": "image",
+        "src": "assets/portfolio/kamaz-05.webp",
+        "thumb": "assets/portfolio/kamaz-05-thumb.webp",
+        "alt": "Пневмосистема под кабиной автокрана"
+      },
+      {
+        "type": "image",
+        "src": "assets/portfolio/kamaz-06.webp",
+        "thumb": "assets/portfolio/kamaz-06-thumb.webp",
+        "alt": "Пневмосистема автокрана на стройке"
+      },
+      {
+        "type": "image",
+        "src": "assets/portfolio/kamaz-07.webp",
+        "thumb": "assets/portfolio/kamaz-07-thumb.webp",
+        "alt": "Задняя часть автокрана на строительной площадке"
+      },
+      {
+        "type": "image",
+        "src": "assets/portfolio/kamaz-08.webp",
+        "thumb": "assets/portfolio/kamaz-08-thumb.webp",
+        "alt": "Пневмогидроусилитель сцепления КАМАЗ"
+      },
+      {
+        "type": "video",
+        "src": ""
+      }
+    ]
+  }
 ];
 
 let activeCase=0,activePhoto=0,lastFocus=null;
@@ -71,7 +236,23 @@ document.querySelectorAll('dialog').forEach(d=>{d.addEventListener('cancel',()=>
 const portfolioImage = document.querySelector('#portfolio-image');
 const portfolioDetails = document.querySelector('.portfolio-details');
 const portfolioThumbs = document.querySelector('#portfolio-thumbs');
-const casePosition = document.querySelector('#case-position');
+const previousPhoto = document.querySelector('#prev-photo');
+const nextPhoto = document.querySelector('#next-photo');
+let photoRenderId = 0;
+let largePhotoRenderId = 0;
+const workNavigation = document.querySelector('#portfolio-work-nav');
+workNavigation.replaceChildren(...works.map((work, index) => {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.textContent = work.label || work.title;
+  button.addEventListener('click', () => {
+    if (activeCase === index) return;
+    const direction = Math.sign(index - activeCase);
+    activeCase = index;
+    renderCase(direction);
+  });
+  return button;
+}));
 const mediaStage = document.querySelector('#media-stage');
 const previousMedia = document.querySelector('#prev-media');
 const nextMedia = document.querySelector('#next-media');
@@ -98,39 +279,57 @@ function renderCase(direction = 0) {
   for (const key of ['title', 'vehicle', 'location', 'problem', 'solution']) {
     document.querySelector('#portfolio-' + key).textContent = work[key];
   }
-  casePosition.textContent = `${activeCase + 1} / ${works.length}`;
+  [...workNavigation.children].forEach((button, index) => {
+    button.setAttribute('aria-pressed', String(index === activeCase));
+  });
   portfolioThumbs.replaceChildren(...photos().map((photo, index) => {
     const button = document.createElement('button');
     button.type = 'button';
     button.setAttribute('aria-label', `Фото ${index + 1}`);
     const image = document.createElement('img');
-    image.src = photo.src;
+    image.src = photo.thumb || photo.src;
     image.alt = '';
+    image.loading = 'lazy';
     button.append(image);
     button.addEventListener('click', () => {
       if (activePhoto !== index) changePhoto(index);
     });
     return button;
   }));
+  portfolioThumbs.scrollLeft = 0;
   renderPhoto(direction);
   if (direction) animateSlide(portfolioDetails);
 }
 
-function renderPhoto(direction = 0) {
-  const photo = photos()[activePhoto];
-  portfolioImage.src = photo.src;
-  portfolioImage.alt = photo.alt;
+async function renderPhoto(direction = 0) {
+  const renderId = ++photoRenderId;
+  const items = photos();
+  const photo = items[activePhoto];
+  previousPhoto.disabled = nextPhoto.disabled = items.length < 2;
+  document.querySelector('#photo-position').textContent = `Фото ${activePhoto + 1} из ${items.length}`;
   [...portfolioThumbs.children].forEach((button, index) => {
     button.setAttribute('aria-pressed', String(index === activePhoto));
   });
+  scrollPhotoThumbs();
+  const loadedImage = new Image();
+  loadedImage.src = photo.src;
+  await loadedImage.decode().catch(() => {});
+  if (renderId !== photoRenderId) return;
+  portfolioImage.src = photo.src;
+  portfolioImage.alt = photo.alt;
   if (direction) animateSlide(portfolioImage, direction);
   if (mediaDialog.open) renderLargePhoto(direction);
 }
 
-function changeCase(direction) {
-  activeCase = (activeCase + direction + works.length) % works.length;
-  renderCase(direction);
+function scrollPhotoThumbs() {
+  const firstVisible = portfolioThumbs.children[Math.floor(activePhoto / 3) * 3];
+  if (!firstVisible) return;
+  portfolioThumbs.scrollTo({
+    left: firstVisible.offsetLeft,
+    behavior: reduced.matches ? 'instant' : 'smooth',
+  });
 }
+new ResizeObserver(scrollPhotoThumbs).observe(portfolioThumbs);
 
 function changePhoto(index) {
   const direction = Math.sign(index - activePhoto);
@@ -138,21 +337,24 @@ function changePhoto(index) {
   renderPhoto(direction);
 }
 
-document.querySelector('#prev-case').addEventListener('click', () => changeCase(-1));
-document.querySelector('#next-case').addEventListener('click', () => changeCase(1));
-document.querySelector('.case-nav').addEventListener('keydown', event => {
+previousPhoto.addEventListener('click', () => changePhoto((activePhoto - 1 + photos().length) % photos().length));
+nextPhoto.addEventListener('click', () => changePhoto((activePhoto + 1) % photos().length));
+document.querySelector('.portfolio-photo-frame').addEventListener('keydown', event => {
   if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
   event.preventDefault();
-  changeCase(event.key === 'ArrowLeft' ? -1 : 1);
+  (event.key === 'ArrowLeft' ? previousPhoto : nextPhoto).click();
 });
 document.querySelector('#similar-case').addEventListener('click', () => lead({ subject: works[activeCase].title }));
 
-function renderLargePhoto(direction = 0) {
+async function renderLargePhoto(direction = 0) {
+  const renderId = ++largePhotoRenderId;
   const items = photos();
   const photo = items[activePhoto];
   const image = document.createElement('img');
   image.src = photo.src;
   image.alt = photo.alt;
+  await image.decode().catch(() => {});
+  if (renderId !== largePhotoRenderId) return;
   mediaStage.replaceChildren(image);
   document.querySelector('#media-position').textContent = `${activePhoto + 1} / ${items.length}`;
   previousMedia.disabled = nextMedia.disabled = items.length < 2;
