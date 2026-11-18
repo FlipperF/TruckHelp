@@ -305,6 +305,16 @@ fitHeroLines();
 setTimeout(()=>heroHeading.classList.add('motion-settled'),4900);
 narrowHero.addEventListener('change',()=>{heroHeading.classList.add('motion-settled');fitHeroLines()});
 
+const closingTruck = document.querySelector('.closing-contact-truck');
+const closingTruckObserver = new IntersectionObserver(entries => {
+  for (const entry of entries) {
+    if (!entry.isIntersecting) continue;
+    closingTruck.classList.add('is-arrived');
+    closingTruckObserver.unobserve(closingTruck);
+  }
+}, { threshold: .25 });
+closingTruckObserver.observe(closingTruck);
+
 const heroBrandViewport = document.querySelector('#truck-brands .brand-viewport');
 const serviceBrands = document.querySelector('.brand-strip--services');
 if (heroBrandViewport && serviceBrands) {

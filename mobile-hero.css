@@ -4,6 +4,7 @@
 }
 
 .mobile-hero-truck,
+.closing-contact-truck,
 .hero-benefit-short {
   display: none;
 }
@@ -169,6 +170,43 @@
   to { transform: translateX(0); }
 }
 
+@media (max-width: 760px) {
+  .closing-contact .content {
+    grid-template-areas: "copy" "truck";
+  }
+
+  .closing-contact .consultation-copy {
+    padding-bottom: 12px;
+  }
+
+  .closing-contact-scene {
+    display: none;
+  }
+
+  .closing-contact-truck {
+    --truck-art: url("assets/mobile-hero-truck.webp");
+    --truck-entrance: 1.8s cubic-bezier(.25, .55, .36, 1) both;
+    grid-area: truck;
+    display: grid;
+    align-items: end;
+    overflow: clip;
+    padding-block: 12px 26px;
+  }
+
+  .closing-contact-truck .mobile-hero-rig,
+  .closing-contact-truck .mobile-hero-wheel {
+    animation: none;
+  }
+
+  .closing-contact-truck.is-arrived .mobile-hero-rig {
+    animation: mobile-truck-drive var(--truck-entrance);
+  }
+
+  .closing-contact-truck.is-arrived .mobile-hero-wheel {
+    animation: mobile-wheel-roll var(--truck-entrance);
+  }
+}
+
 @keyframes mobile-wheel-roll {
   /* Travel distance divided by the tire circumference gives 2.42 turns. */
   from { transform: rotate(872deg); }
@@ -178,6 +216,8 @@
 @media (max-width: 760px) and (prefers-reduced-motion: reduce) {
   .mobile-hero-rig,
   .mobile-hero-wheel,
+  .closing-contact-truck.is-arrived .mobile-hero-rig,
+  .closing-contact-truck.is-arrived .mobile-hero-wheel,
   .hero-actions,
   .hero-bottom {
     animation: none;

@@ -12,7 +12,7 @@
   border-bottom: 4px solid #a73508;
   border-radius: 8px;
 }
-.button::after {
+.button--glint::after {
   content: "";
   position: absolute;
   inset: 0 auto 0 0;
@@ -461,7 +461,7 @@
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .button::after {
+  .button--glint::after {
     display: none;
   }
 }
