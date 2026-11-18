@@ -9,6 +9,9 @@
 html {
   scroll-padding-top: calc(var(--sticky-header-height, 100px) + 16px);
 }
+main section[id][aria-labelledby] {
+  scroll-margin-top: calc(24px - var(--anchor-content-inset, 0px));
+}
 .header-shell {
   position: sticky;
   inset-block-start: 0;
@@ -1795,5 +1798,12 @@ button:is(.close, .price-category-close):focus-visible {
 @media (min-width: 761px) {
   .hero { border-radius: 24px; }
   .hero-bg img { object-position: 64% center; }
-  .hero-bg::after { background: linear-gradient(90deg, #0c1219c7, #0c121975 48%, #0c121926 78%); }
+  .hero-bg::after {
+    background: linear-gradient(90deg,
+      rgb(12 18 25 / 86%) 0%,
+      rgb(12 18 25 / 70%) 24%,
+      rgb(12 18 25 / 46%) 48%,
+      rgb(12 18 25 / 20%) 72%,
+      rgb(12 18 25 / 8%) 100%);
+  }
 }

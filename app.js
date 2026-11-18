@@ -242,6 +242,19 @@ const headerSizeObserver = new ResizeObserver(([entry]) => {
   document.documentElement.style.setProperty('--sticky-header-height', `${entry.target.offsetHeight}px`);
 });
 headerSizeObserver.observe(headerShell);
+const sectionAnchorObserver = new ResizeObserver(entries => {
+  const offsets = entries.map(({ target }) => {
+    const heading = target.querySelector('.section-heading, h2');
+    const inset = heading ? heading.getBoundingClientRect().top - target.getBoundingClientRect().top : 0;
+    return { target, inset };
+  });
+  for (const { target, inset } of offsets) {
+    target.style.setProperty('--anchor-content-inset', `${inset}px`);
+  }
+});
+document.querySelectorAll('main section[id][aria-labelledby]').forEach(section => {
+  sectionAnchorObserver.observe(section);
+});
 function setHeaderMenu(open) {
   menuToggle.setAttribute('aria-expanded', String(open));
   menuToggle.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
