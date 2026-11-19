@@ -1345,8 +1345,6 @@ a[href^="tel:"] {
     radial-gradient(ellipse at 10% 83%, #b5422175, transparent 51%);
 }
 .consultation .content {
-  width: min(83%, 1560px);
-  max-width: none;
   min-height: clamp(550px, 36vw, 680px);
   display: grid;
   grid-template-columns: minmax(0, 1.66fr) minmax(0, 1fr);
@@ -1444,7 +1442,7 @@ a[href^="tel:"] {
 .consultation-portrait img {
   position: absolute;
   inset: 30px auto 0 0;
-  width: 112%;
+  width: 100%;
   height: calc(100% - 30px);
   object-fit: contain;
   object-position: right bottom;
@@ -1522,7 +1520,7 @@ a[href^="tel:"] {
     overflow: visible;
   }
   .consultation-portrait img {
-    inset: auto -3vw 0 auto;
+    inset: auto 0 0 auto;
     width: auto;
     height: calc(100% + 28px);
   }
@@ -1540,12 +1538,8 @@ a[href^="tel:"] {
 }
 @media (max-width: 1023px) {
   .consultation .content {
-    width: 88%;
     grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr);
     column-gap: 18px;
-  }
-  .consultation-portrait img {
-    width: 114%;
   }
 }
 @media (max-width: 700px) {
@@ -1589,10 +1583,17 @@ a[href^="tel:"] {
   display: none;
 }
 .closing-contact .content {
+  width: min(83%, 1560px);
+  max-width: none;
   min-height: clamp(460px, 34vw, 620px);
   grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr);
   grid-template-areas: ". copy";
   align-items: center;
+}
+@media (max-width: 1023px) {
+  .closing-contact .content {
+    width: 88%;
+  }
 }
 .closing-contact .consultation-copy {
   grid-area: copy;
